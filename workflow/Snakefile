@@ -431,6 +431,7 @@ rule make_R_figures:
         "logs/make_R_figures.{SM}.{W}.{F}.log",
     params:
         script=workflow.source_path("scripts/aln_plot.R"),
+        outdir=OUT_DIR,
     resources:
         mem=64,
     shell:
@@ -438,6 +439,7 @@ rule make_R_figures:
         Rscript {params.script} \
             --bed {input.bed} \
             --threads {threads} \
+            --outdir {params.outdir} \
             --prefix {wildcards.SM}.{wildcards.W}.{wildcards.F}
         """
 

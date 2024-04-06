@@ -228,11 +228,14 @@ parser <- ArgumentParser()
 parser$add_argument("-b", "--bed", help = "bedfile with alignment information")
 parser$add_argument("-t", "--threads", type = "integer", help = "number of threads")
 parser$add_argument("-p", "--prefix", help = "Prefix for the outputs")
+parser$add_argument("-o", "--outdir",  help="Output dir.", default="results")
+
 args <- parser$parse_args()
 
 PRE <- args$prefix
 GLOB <- args$bed
-OUT <- glue("results/{PRE}_figures")
+OUTDIR = args$outdir
+OUT <- glue("{OUTDIR}/{PRE}_figures")
 print(PRE)
 print(GLOB)
 
@@ -262,7 +265,6 @@ for (TRI in vals) {
     scale <- 1
   }
   for (ONECOLORSCALE in vals) {
-    # plots = lapply(Qs, make_plots)
     cl <- parallel::makeCluster(min(args$threads, length(Qs)),
       setup_strategy = "sequential",
       outfile = ""
